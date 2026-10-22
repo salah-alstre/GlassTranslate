@@ -1,0 +1,241 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/noto-sans-arabic";
+
+/* Theme tokens. Dark: #050505 / #101010 / #171717. The accent is a cyan → mint pair. */
+:root,
+:root[data-theme="dark"] {
+  --bg: #050505;
+  --surface: #101010;
+  --raised: #171717;
+  --line: #262626;
+  --line-soft: #1c1c1c;
+  --fg: #f4f4f5;
+  --muted: #a1a1aa;
+  --faint: #71717a;
+  --accent: #22d3ee;
+  --accent-2: #34d399;
+  --accent-ink: #04201f;
+  --danger: #f87171;
+  --warn: #fbbf24;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f5f5f4;
+  --surface: #ffffff;
+  --raised: #efeeec;
+  --line: #dcdad6;
+  --line-soft: #e8e6e2;
+  --fg: #0c0c0d;
+  --muted: #52525b;
+  --faint: #71717a;
+  --accent: #0891b2;
+  --accent-2: #059669;
+  --accent-ink: #ffffff;
+  --danger: #dc2626;
+  --warn: #b45309;
+  --shadow: 0 18px 50px rgba(20, 20, 20, 0.22);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-soft: var(--line-soft);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent-2);
+  --color-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-warn: var(--warn);
+  --font-sans: "Inter Variable", "Noto Sans Arabic Variable", "Segoe UI", system-ui, sans-serif;
+  --font-arabic: "Noto Sans Arabic Variable", "Inter Variable", "Segoe UI", sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+/* Only the main window scrolls; the popup and selector are fixed-size surfaces. */
+body.view-popup,
+body.view-selector {
+  overflow: hidden;
+}
+
+html[dir="rtl"] body {
+  font-family: "Noto Sans Arabic Variable", "Inter Variable", "Segoe UI", sans-serif;
+}
+
+/* The popup window is transparent; the selection overlay is opaque black. */
+body.view-popup {
+  background: transparent;
+}
+body.view-selector {
+  background: #000;
+  cursor: crosshair;
+}
+
+textarea,
+input,
+.selectable {
+  user-select: text;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+/* Flat, solid accent for primary actions (no gradient). */
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+}
+
+/* Popup card: subtle glass. Only the surface is translucent — text stays fully opaque. */
+.popup-card {
+  --popup-alpha: 100%;
+  background: color-mix(in srgb, var(--surface) var(--popup-alpha), transparent);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+.popup-text-s {
+  font-size: 14px;
+  line-height: 1.65;
+}
+.popup-text-m {
+  font-size: 16px;
+  line-height: 1.7;
+}
+.popup-text-l {
+  font-size: 19px;
+  line-height: 1.75;
+}
+
+.arabic {
+  font-family: var(--font-arabic);
+}
+
+/* Range input */
+input[type="range"] {
+  accent-color: var(--accent);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.toast {
+  animation: toast-in 160ms ease-out both;
+}
+.anim-pop {
+  animation: pop-in 170ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.anim-fade {
+  animation: fade-in 200ms ease-out both;
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--raised) 25%, var(--line) 50%, var(--raised) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-pop,
+  .anim-fade,
+  .toast,
+  .skeleton,
+  .spin {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,24 @@
+# Dependencies and build output
+node_modules/
+dist/
+.vite/
+src-tauri/target/
+src-tauri/gen/
+*.tsbuildinfo
+
+# Model files are large and are produced by scripts/ (not committed)
+src-tauri/resources/model/*
+!src-tauri/resources/model/.gitkeep
+src-tauri/resources/model-he-ar/*
+!src-tauri/resources/model-he-ar/.gitkeep
+
+# Local / editor / tooling state
+.claude/
+.vscode/
+.idea/
+.env
+.env.*
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
