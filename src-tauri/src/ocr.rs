@@ -19,7 +19,7 @@ use windows::Win32::System::WinRT::{RoInitialize, RO_INIT_MULTITHREADED};
 
 #[derive(Debug)]
 pub enum OcrError {
-    /// No OCR recognizer language is installed in Windows.
+    /// The OCR engine for the language cannot run (no Windows OCR language for English, or damaged bundled Tesseract for Hebrew).
     Unavailable(String),
     Failed(String),
 }

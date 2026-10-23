@@ -1,6 +1,6 @@
 [package]
 name = "glasstranslate-lite"
-version = "1.1.1"
+version = "1.1.2"
 description = "Instant screen-region and clipboard translation, English to Arabic, fully offline."
 authors = ["GlassTranslate"]
 edition = "2021"

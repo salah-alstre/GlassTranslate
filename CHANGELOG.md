@@ -2,6 +2,22 @@
 
 All notable changes to GlassTranslate Lite. Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.1.2]
+
+### Fixed
+- **Hebrew → Arabic could still show a "Windows OCR language pack" error.** Machines that kept running (or were left
+  half-upgraded to) the 1.1.0 executable still routed Hebrew to Windows OCR (`he-IL`) and showed that error. 1.1.1+
+  never uses Windows OCR for Hebrew. The popup now picks the Hebrew-specific message in the backend as well
+  (`ocr_unavailable_he`), so a Hebrew failure can never be described as a missing Windows language pack, and the
+  messages no longer hard-code a version number.
+
+### Notes
+- Verified on the installed 1.1.2 app: Hebrew → Arabic screen translation (bundled Tesseract, no language-pack error)
+  and English → Arabic screen translation (Windows OCR). Not verified: Discord itself, tray right-click menu / *Quit*,
+  the uninstaller and a network-blocked run.
+- Quit the app from the tray before upgrading (or choose "Uninstall before installing") so a running instance cannot
+  keep the old executable locked.
+
 ## [1.1.1]
 
 ### Added

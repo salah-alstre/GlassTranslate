@@ -22,7 +22,7 @@
   <img alt="Offline" src="https://img.shields.io/badge/Works-offline-2EA44F">
   <img alt="English to Arabic" src="https://img.shields.io/badge/EN%20%E2%86%92%20AR-supported-0E7490">
   <img alt="Hebrew to Arabic" src="https://img.shields.io/badge/HE%20%E2%86%92%20AR-supported-0E7490">
-  <img alt="Version 1.1.1" src="https://img.shields.io/badge/version-1.1.1-22D3EE">
+  <img alt="Version 1.1.2" src="https://img.shields.io/badge/version-1.1.2-22D3EE">
 </p>
 
 <p align="center">
@@ -121,18 +121,18 @@ Switch direction (`English → العربية` / `עברית → العربية`
   </tr>
 </table>
 
-<sub>Screenshots were captured from the installed 1.1.0 build. 1.1.1 keeps the same layout. The one visible difference is that
+<sub>Screenshots were captured from the installed 1.1.0 build. 1.1.2 keeps the same layout. The one visible difference is that
 1.1.0 showed a "Hebrew screen reading needs the Windows Hebrew OCR language pack" notice (in Settings, History and the
-Arabic view); 1.1.1 bundles its own Hebrew OCR, so that notice no longer applies.</sub>
+Arabic view); 1.1.1 and later bundle their own Hebrew OCR, so that notice no longer applies.</sub>
 
 ## Download & Installation
 
 - **Requirements:** Windows 10 or 11, x64. No administrator rights, Python, Rust or Node.js needed to *run* the app.
-- **Installer:** `GlassTranslate Lite_1.1.1_x64-setup.exe` (NSIS, per-user, about 168 MB). Both translation models and
+- **Installer:** `GlassTranslate Lite_1.1.2_x64-setup.exe` (NSIS, per-user, about 168 MB). Both translation models and
   the Hebrew OCR engine are **bundled**, so there is no extra download after install.
 - **No public release is published yet.** There is no download link here on purpose; build the installer yourself
   (see [Build from source](#build-from-source)) or get it from whoever shared it with you.
-- Run the setup file. It installs to `%LOCALAPPDATA%\GlassTranslate Lite\` and can be installed over 1.1.0.
+- Run the setup file. It installs to `%LOCALAPPDATA%\GlassTranslate Lite\` and can be installed over 1.1.0 or 1.1.1. Close the app (tray icon → *Quit*) before upgrading so the old executable is not locked.
 - Settings and history live in `%APPDATA%\com.glasstranslate.lite\`. Uninstalling removes the program and leaves these files.
 
 ## Technology stack
@@ -203,7 +203,7 @@ check important translations.
 </details>
 
 <details>
-<summary><b>Testing status (1.1.1)</b></summary>
+<summary><b>Testing status (1.1.2)</b></summary>
 
 <br>
 
@@ -216,22 +216,26 @@ check important translations.
 - TypeScript typecheck, frontend build, Rust build, Tauri production build and NSIS installer build.
 - Uninstaller: the generated NSIS script was reviewed (per-user, opt-in "delete app data" checkbox). It was **not** run.
 
-**Verified by hand on the installed app** (installed over 1.1.0)
+**Verified by hand on the installed 1.1.2 app** (installed over a half-upgraded 1.1.x)
 
-- Hebrew screen OCR with `Ctrl+Alt+G` on a dark Notepad window at 150 % zoom: all five test sentences recognised and
-  translated (for example `שלום, מה שלומך?` → `مرحباً، كيف حالك؟`). This was a controlled Notepad window, **not** Discord.
-- English screen OCR, clipboard translation in both directions, and manual input in both directions.
+- Settings shows the engine per direction: English → Arabic "Windows OCR — en-US", Hebrew → Arabic "Bundled Tesseract
+  OCR — Hebrew (offline)"; both models present.
+- Hebrew screen OCR with `Ctrl+Alt+G` on a Notepad window at 100 % zoom: the popup (titled עברית → العربية) showed the
+  Arabic translation, no language-pack error. The text read back by Tesseract had minor bracket artifacts. This was a
+  controlled Notepad window, **not** Discord. (Earlier 1.1.1 run: dark Notepad at 150 %, all five sentences.)
+- English screen OCR with `Ctrl+Alt+G` after switching direction without a restart (Windows OCR →
+  `أين يمكنني العثور على الملف؟ البرنامج لا يعمل على حاسوبي`), clipboard translation in both directions, and manual input in both directions.
 - Direction switching without restart, *Translate again*, copy, dragging, pin, `Esc`, popup opacity and position,
   shortcut rebinding, history and favorites, Arabic RTL interface, light/dark theme.
 - Tray icon, and left-click reopening the window after it was closed to the tray.
-- 1.1.0 → 1.1.1 upgrade with settings and both models preserved.
+- Upgrade over the older install with settings and both models preserved.
 
 </details>
 
 ## Known limitations
 
-- **Not verified on the installed 1.1.1 app:** Hebrew capture inside Discord itself, the tray icon's right-click menu
-  and *Quit*, restart persistence through the 1.1.1 UI (checked on 1.1.0), the uninstaller, and any run with the network
+- **Not verified on the installed 1.1.2 app:** Hebrew capture inside Discord itself, the tray icon's right-click menu
+  and *Quit*, restart persistence through the UI (checked on 1.1.0), the uninstaller, and any run with the network
   disconnected.
 - Hebrew OCR depends on text size and contrast. Small text (about 12 px) can have letter confusions. Select a tight
   region, or copy the text and use `Ctrl+Alt+V`.
@@ -256,5 +260,5 @@ for release history.
 ---
 
 <p align="center">
-  <sub>GlassTranslate Lite 1.1.1 · Offline · Private · Windows 10/11</sub>
+  <sub>GlassTranslate Lite 1.1.2 · Offline · Private · Windows 10/11</sub>
 </p>

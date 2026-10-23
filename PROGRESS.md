@@ -45,6 +45,16 @@ Working notes so work survives context compaction. Keep this file current.
 - NOT VERIFIED: tray right-click menu; uninstall (the uninstaller process un.exe was denied computer-use access, so it was cancelled; app still installed); offline test (needs firewall/adapter change, not done); Hebrew screen OCR.
 - Cleanup: Desktop\GTL-1.1.0-setup.exe temp copy removed.
 
+## v1.1.2 (Hebrew OCR routing report follow-up)
+- Report: Hebrew → Arabic on Discord showed "Windows OCR has no English language pack … he-IL pack is not installed".
+- Findings: that text exists only in the 1.1.0 binary. The installed exe was still 1.1.0 (file and process version, running since 6:20 AM) while the `tesseract` folder from the 1.1.1 install was present, i.e. a stale running instance / partial upgrade. 1.1.1 source routes `he-ar` → bundled Tesseract; direction is read once from settings; capture is a full-monitor grab with nothing app-specific.
+- Hardening: backend now emits `ocr_unavailable_he` for `he-ar`; version-free messages; version 1.1.2 so a stale install is visible.
+- Previous installer/exes preserved in `Desktop\GlassTranslate-backup-v1.1.1\` (1.1.1 installer 735c0165…, 1.1.1 exe 10136805…, installed 1.1.0 exe 7efe0d9f…).
+- Build: `GlassTranslate Lite_1.1.2_x64-setup.exe`, 168,287,857 bytes, SHA-256 a2ed8231c18927c840ae25eab498e9ef4cba5ffb484299afcca8f2c927fe7a75; release exe SHA-256 02c244a2…aa63. `cargo test --release --lib` 24/24, tsc, vite, tauri build OK.
+- Installed 1.1.2 via the GUI installer (upgrade, "Uninstall before installing" path). Verified in the GUI: Settings engine status (EN→AR Windows OCR en-US; HE→AR bundled Tesseract), native Hebrew test (Notepad, Ctrl+Alt+G → Arabic translation, no language-pack error), native English regression after switching direction without restart (Windows OCR → Arabic translation).
+- Caveat: shell checks still reported FileVersion 1.1.0 / the old hash for the installed exe (MSIX shell virtualization of %LOCALAPPDATA%); GUI behavior is the evidence.
+- NOT verified: Discord window itself, tray right-click menu/Quit, uninstaller, network-blocked run.
+
 ## v1.1.1 (Hebrew OCR fix)
 - Root cause of the 1.1.0 limitation: Windows OCR has no he-IL pack on this PC (only ar-SA, en-US).
 - Fix: bundled Tesseract 5.4.0 (UB Mannheim, Apache-2.0) + official heb.traineddata (tessdata_best, SHA-256 dbaa827a...abdae5) + eng.traineddata, in src-tauri/resources/tesseract. Hidden child process, PNG on stdin, TSV on stdout.

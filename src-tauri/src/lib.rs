@@ -789,7 +789,8 @@ fn selection_stage(app: &AppHandle, sel: Selection) {
         Ok(Err(ocr::OcrError::Unavailable(d))) => {
             update_popup(app, job, |p| {
                 p.status = "error".into();
-                p.error_kind = "ocr_unavailable".into();
+                // Hebrew uses the bundled Tesseract, never a Windows language pack, so it gets its own message.
+                p.error_kind = if dir == "he-ar" { "ocr_unavailable_he" } else { "ocr_unavailable" }.into();
                 p.error_detail = d;
             });
         }
